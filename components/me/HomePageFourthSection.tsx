@@ -106,7 +106,7 @@ const HomePageFourthSection = () => {
           <h4 className="text-lg font-bold text-primary">Loan Services</h4>
           <p>
             Achieve your dreams with our flexible loan options tailored to
-            your needs, whether it's for a home, car, or personal expenses.
+            your needs, whether it&apos;s for a home, car, or personal expenses.
           </p>
           <Link
             href="#"
