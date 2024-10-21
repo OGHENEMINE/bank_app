@@ -27,7 +27,7 @@ const HomePageThirdSection = () => {
             <h3 className="text-xl font-bold text-red-600">Mobile Banking</h3>
             <p>
               <span className="text-primary font-bold">Effortless Access.</span>{" "}
-              Our App ensures you’re always connected to your finances, with
+              Our App ensures you&apos;re always connected to your finances, with
               seamless compatibility across devices for on-the-go banking.
             </p>
           </div>
