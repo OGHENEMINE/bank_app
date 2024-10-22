@@ -1,20 +1,27 @@
 "use client";
 import { AuthContext } from "@/context/authContext";
-import { AuthContextInterface } from "@/interface";
+import { AuthContextInterface } from "@/Interface";
 import { useRouter } from "next/navigation";
-import { ReactNode, useContext, useEffect } from "react";
+import { ReactNode, useCallback, useContext, useEffect } from "react";
 
 const GeneralLayout = ({ children }: { children: ReactNode }) => {
   const { isAuthenticated, checkUser } = useContext(
     AuthContext
   ) as AuthContextInterface;
   const { push } = useRouter();
+  
+  const handleRouting = useCallback(() => {
+    if (isAuthenticated) {
+      return push("/login");
+    }
+  }, [isAuthenticated, push]);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      push("/login");
+    if (isAuthenticated) {
+      handleRouting();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, handleRouting]);
+
 
   return <div>{children}</div>;
 };

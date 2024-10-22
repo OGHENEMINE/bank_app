@@ -26,7 +26,7 @@ export const createAccount = async (form: FormData) => {
     if (!validation.success) {
       return {
         success: false,
-        message: validation.error.flatten(),
+        message: `something went wrong. ${validation.error.flatten()}`,
       };
     }
 

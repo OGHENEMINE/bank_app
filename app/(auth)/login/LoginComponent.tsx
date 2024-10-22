@@ -20,9 +20,9 @@ import { loginSchema } from "./schema";
 import { loginUser } from "./action";
 import Link from "next/link";
 import { AuthContext } from "@/context/authContext";
-import { AuthContextInterface } from "@/interface";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { AuthContextInterface } from "@/Interface";
 
 const LoginComponent = () => {
   const { checkUser } = useContext(AuthContext) as AuthContextInterface;

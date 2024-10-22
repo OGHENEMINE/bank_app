@@ -1,7 +1,7 @@
 "use client"
 import AdminDashboardLayout from "@/components/me/AdminDashboardLayout";
 import { AuthContext } from "@/context/authContext";
-import { AuthContextInterface } from "@/interface";
+import { AuthContextInterface } from "@/Interface";
 import { useRouter } from "next/navigation";
 import React, { ReactNode, useCallback, useContext, useEffect } from "react";
 
