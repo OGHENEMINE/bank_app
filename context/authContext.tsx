@@ -1,6 +1,5 @@
 "use client";
 import { getLoggedInUser } from "@/app/(auth)/login/action";
-import { AuthContextInterface, UserInterface } from "@/interface";
 import { useRouter } from "next/navigation";
 import React, {
   createContext,
@@ -12,6 +11,7 @@ import React, {
 import { toast } from "sonner";
 import { getLoggedOut } from "./action";
 import { formatDateString } from "@/lib/formatDate";
+import { AuthContextInterface, UserInterface } from "@/Interface";
 
 export const AuthContext = createContext<AuthContextInterface | null>(null);
 
