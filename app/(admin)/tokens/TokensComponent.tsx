@@ -1,17 +1,15 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Coins,
   DownloadCloud,
   FolderPlusIcon,
   KeySquare,
-  MoreHorizontal,
+  MoreHorizontal
 } from "lucide-react";
 import SearchInput from "@/components/me/SearchInput";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -65,8 +63,7 @@ const TokensComponent = () => {
         toast.error(message);
       }
     } catch (error) {
-      console.log(error);
-      toast.error(error.message);
+      console.error(error);
     }
   };
 
