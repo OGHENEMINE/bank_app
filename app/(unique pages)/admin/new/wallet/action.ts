@@ -11,7 +11,7 @@ export const getCryptoAssets = async () => {
     );
 
     if (!response.ok) {
-      throw Error("Failed to fetch crypto assets.");
+      throw new Error("Failed to fetch crypto assets.");
     }
 
     const data = await response.json();
@@ -34,19 +34,20 @@ export const getCryptoAssets = async () => {
           name: item.name,
           image: item.image,
           price: item.current_price,
-          // marketCap: item.market_cap,
         })
       ),
     };
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error fetching crypto assets:", error.message);
-      return {
-        success: false,
-        message: "Failed to fetch crypto assets. Connect to the internet",
-        data: [],
-      };
     }
+
+    // Ensure a return value in the catch block
+    return {
+      success: false,
+      message: "Failed to fetch crypto assets. Connect to the internet",
+      data: [],
+    };
   }
 };
 
