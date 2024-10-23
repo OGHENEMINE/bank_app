@@ -109,19 +109,26 @@ export const addToken = async (form: FormData) => {
       message: "Token successfully added.",
     };
   } catch (error) {
-    // console.log("mongoose error:", error.message.includes("E11000"));
-    if (error.message.includes("E11000")) {
+    if (error instanceof Error) {
+      if (error.message.includes("E11000")) {
+        return {
+          success: false,
+          message: "Token value already in use. Try a different one.",
+          error: error.message, // Return the error message instead of logging it
+        };
+      }
+
       return {
         success: false,
-        message: "Token value already in use. Try a different one.",
-        error: error.message, // Return the error message instead of logging it
+        message: "An unexpected error occurred.",
+        error: error.message,
       };
     }
 
+    // Fallback for unknown error types
     return {
       success: false,
       message: "An unexpected error occurred.",
-      error: error.message,
     };
   }
 };

@@ -9,17 +9,17 @@ const AdminLayout = ({children}: {children: ReactNode}) => {
   const { user } = useContext(AuthContext) as AuthContextInterface;
   const { back } = useRouter();
 
-  const handleRouting = useCallback(() => {
+  // const handleRouting = useCallback(() => {
+  //   if (user.role !== "admin") {
+  //     back();
+  //   }
+  // }, [user.role, back]);
+
+  useEffect(() => {
     if (user.role !== "admin") {
       back();
     }
-  }, [user.role, back]);
-
-  useEffect(() => {
-    if (user.role) {
-      handleRouting();
-    }
-  }, [user.role, handleRouting]);
+  }, [user.role]);
 
   return <AdminDashboardLayout>{children}</AdminDashboardLayout>;;
 };

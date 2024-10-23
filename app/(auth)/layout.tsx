@@ -1,25 +1,17 @@
 "use client";
 import { AuthContext } from "@/context/authContext";
 import { AuthContextInterface } from "@/Interface";
-import { useRouter } from "next/navigation";
-import { ReactNode, useCallback, useContext, useEffect } from "react";
+import { redirect } from "next/navigation";
+import { ReactNode, useContext, useEffect } from "react";
 
 const AuthLayout = ({ children }: { children: ReactNode }) => {
   const { isAuthenticated } = useContext(AuthContext) as AuthContextInterface;
-  const { push } = useRouter();
-
-  const handleRouting = useCallback(() => {
-    if (isAuthenticated) {
-      return push("/dashboard");
-    }
-  }, [isAuthenticated, push]);
 
   useEffect(() => {
     if (isAuthenticated) {
-      handleRouting();
+      return redirect("/dashboard");
     }
-  }, [isAuthenticated, handleRouting]);
-
+  }, [isAuthenticated]);
 
   return (
     <div className="grid grid-cols-2 min-h-screen">
