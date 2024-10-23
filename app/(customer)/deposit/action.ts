@@ -52,11 +52,17 @@ export const getDepositData = async (id: string) => {
   }
 };
 
-export const createDeposit = async (data) => {
+export const createDeposit = async ({
+  accountId,
+  amount,
+}: {
+  accountId: string;
+  amount: number;
+}) => {
   try {
     await connectDB();
 
-    const transactionAccount = await Account.findById(data.accountId);
+    const transactionAccount = await Account.findById(accountId);
 
     console.log("Existing transaction account:", transactionAccount);
 
@@ -68,12 +74,12 @@ export const createDeposit = async (data) => {
     }
 
     const refineData = {
-      transaction_accountId: data.accountId,
+      transaction_accountId: accountId,
       transaction_title: "Funds deposit",
       transaction_hidden_status: false,
       transaction_status: "pending",
-      transaction_desc: `a deposit payment of ${data.amount.toString()}`,
-      transaction_amount: formatCurrencyDB(data.amount),
+      transaction_desc: `a deposit payment of ${amount.toString()}`,
+      transaction_amount: formatCurrencyDB(amount),
       transaction_type: "credit",
       transaction_currency: transactionAccount.currency,
       transaction_receiver_name: "same",
@@ -100,7 +106,7 @@ export const createDeposit = async (data) => {
       accountName: transactionAccount.account_name,
       transactionType: refineData.transaction_type.charAt(0).toUpperCase(),
       transactionAmount: formatCurrencyUI(
-        data.amount * 100,
+        amount * 100,
         transactionAccount.currency
       ),
       createdAt: formatDateString(newTransaction.createdAt.toString()),
