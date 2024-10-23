@@ -16,28 +16,37 @@ export const getCryptoAssets = async () => {
 
     const data = await response.json();
 
-    // return console.log("Fetched crypto assets:", data);
+    console.log("Fetched crypto assets:", data);
 
     return {
       success: true,
       message: "Data fetched successfully",
-      data: data.map((item) => ({
-        id: item.id,
-        symbol: item.symbol,
-        name: item.name,
-        image: item.image,
-        price: item.current_price,
-        // marketCap: item.market_cap,
-        // currentPrice: item.current_price,
-      })),
+      data: data.map(
+        (item: {
+          id: string;
+          symbol: string;
+          name: string;
+          image: string;
+          current_price: number;
+        }) => ({
+          id: item.id,
+          symbol: item.symbol,
+          name: item.name,
+          image: item.image,
+          price: item.current_price,
+          // marketCap: item.market_cap,
+        })
+      ),
     };
   } catch (error) {
-    console.error("Error fetching crypto assets:", error.message);
-    return {
-      success: false,
-      message: "Failed to fetch crypto assets. Connect to the internet",
-      data: [],
-    };
+    if (error instanceof Error) {
+      console.error("Error fetching crypto assets:", error.message);
+      return {
+        success: false,
+        message: "Failed to fetch crypto assets. Connect to the internet",
+        data: [],
+      };
+    }
   }
 };
 
@@ -67,7 +76,7 @@ export const addAWallet = async (form: FormData) => {
     await connectDB();
 
     const wallet = await Wallet.create(data);
-    console.log("wallet created", wallet)
+    console.log("wallet created", wallet);
 
     if (wallet) {
       return {
