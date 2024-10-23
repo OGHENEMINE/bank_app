@@ -1,5 +1,5 @@
+import { AccountInterface } from "@/Interface";
 import { Card, CardContent } from "../ui/card";
-import { AccountInterface } from "@/interface";
 import currencies from "@/lib/currency";
 import { formatCurrencyUI } from "@/lib/formatCurrency";
 import Link from "next/link";

@@ -1,4 +1,4 @@
-import { TransactionInterface } from "@/interface";
+import { TransactionInterface } from "@/Interface";
 import { Card, CardContent } from "../ui/card";
 import currencies from "@/lib/currency";
 

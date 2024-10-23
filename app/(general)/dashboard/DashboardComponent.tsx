@@ -1,9 +1,9 @@
 "use client";
 import { AuthContext } from "@/context/authContext";
-import { AuthContextInterface } from "@/interface";
 import { useContext } from "react";
 import CustomerDashboard from "./CustomerDashboard";
 import AdminDashboard from "./AdminDashboard";
+import { AuthContextInterface } from "@/Interface";
 
 const DashboardComponent = () => {
   const { user } = useContext(AuthContext) as AuthContextInterface;
