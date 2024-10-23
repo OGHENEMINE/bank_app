@@ -51,7 +51,6 @@ const RegisterComponent = () => {
         }
       });
   
-      console.log(data);
       const { success, message } = await createAccount(data);
   
       if (success === true) {

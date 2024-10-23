@@ -1,12 +1,10 @@
 "use client";
 import { getLoggedInUser } from "@/app/(auth)/login/action";
 import { useRouter } from "next/navigation";
-import React, {
+import {
   createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
+  ReactNode, useCallback, useEffect,
+  useState
 } from "react";
 import { toast } from "sonner";
 import { getLoggedOut } from "./action";
@@ -51,7 +49,17 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         });
         setIsAuthenticated(true);
       } else {
-        setUser(user); // Clear user state if no user is found
+        setUser({
+          id: "",
+          firstname: "",
+          lastname: "",
+          email: "",
+          pin: "",
+          registered: "",
+          role: "",
+          otp: "",
+          otpExpiresAt: "",
+        }); // Clear user state if no user is found
         setIsAuthenticated(false);
         console.error("User not found");
       }
@@ -62,9 +70,13 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  useEffect(() => {
-    checkUser();
-  }, []);
+// Using useCallback to memoize the checkUser function
+const memoizedCheckUser = useCallback(checkUser, []);
+
+// Use useEffect to call checkUser when the component mounts
+useEffect(() => {
+  memoizedCheckUser();
+}, [memoizedCheckUser]);
 
   const handleLogOut = async () => {
     try {

@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -36,11 +36,17 @@ const LoginComponent = () => {
     try {
       const data = new FormData();
 
-      for (const key in values) {
-        if (values.hasOwnProperty(key)) {
-          data.append(key, values[key]);
+      // Use keyof to ensure that key is properly typed
+      (Object.keys(values) as (keyof typeof values)[]).forEach((key) => {
+        // TypeScript will now know that key is one of the defined keys
+        const value = values[key];
+        
+        // Append the value to the FormData if it's not undefined
+        if (value !== undefined) {
+          data.append(key, value as string); // Make sure to cast value to string if necessary
         }
-      }
+      });
+      
       const {message, success} = await loginUser(data);
       if (success) {
         await checkUser();
