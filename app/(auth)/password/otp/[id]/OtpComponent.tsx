@@ -20,7 +20,6 @@ import {
 } from "@/components/ui/input-otp";
 import { Loader2, MailCheck } from "lucide-react";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { formatTime } from "@/lib/formatEmailTime";
 import { Input } from "@/components/ui/input";
 import { useParams, useRouter } from "next/navigation";
@@ -65,16 +64,14 @@ const OtpComponent = () => {
       console.log(values);
       const data = new FormData();
 
-      for (const key in values) {
-        if (values.hasOwnProperty(key)) {
-          data.append(key, values[key]);
-        }
-      }
+      (Object.keys(values) as (keyof typeof values)[]).forEach((key) => {
+        data.append(key, values[key]); // Make sure to cast value to string if necessary
+      });
 
-      const {message, success, expired} = await verifyOTP(data);
+      const { message, success, expired, email } = await verifyOTP(data);
 
       if (success === true) {
-        // setUserEmail(res.email); // Store the user's email
+        setUserEmail(email); // Store the user's email
         setIsDisabled(expired);
         toast.success(message);
         return push(`/password/update/${id}`);
@@ -89,13 +86,13 @@ const OtpComponent = () => {
   const handleEmailResend = async (email: string) => {
     console.log(email);
     // Send email resend request to server
-    const res = await resendOTPEmail(email);
-    if (res.success === true) {
+    const { success, message } = await resendOTPEmail(email);
+    if (success === true) {
       // Disable the button and start countdown
       setIsDisabled(true);
       setCountdown(1500); // Reset countdown to initial value
     } else {
-      console.log("error resending email", res.message);
+      console.log("error resending email", message);
     }
   };
 

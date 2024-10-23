@@ -73,12 +73,18 @@ const EditUserComponent = () => {
   const onSubmit = async (values: z.infer<typeof editUserSchema>) => {
     try {
       const data = new FormData();
-      // Assuming values is an object with keys and values
-      for (const key in values) {
-        if (values.hasOwnProperty(key)) {
-          data.append(key, values[key]);
+
+      // Use keyof to ensure that key is properly typed
+      (Object.keys(values) as (keyof typeof values)[]).forEach((key) => {
+        // TypeScript will now know that key is one of the defined keys
+        const value = values[key];
+
+        // Append the value to the FormData if it's not undefined
+        if (value !== undefined) {
+          data.append(key, value as string); // Make sure to cast value to string if necessary
         }
-      }
+      });
+
       const { success, message } = await editUserInfo(data);
 
       if (success) {

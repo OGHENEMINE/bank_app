@@ -14,7 +14,11 @@ export const verifyOTP = async (form: FormData) => {
     const validation = otpSchema.safeParse(data);
 
     if (!validation.success) {
-      return validation.error;
+      return {
+        success: false,
+        message: `Something went wrong. ${validation.error.flatten()}`,
+        expired: false
+      };
     }
 
     await connectDB();
@@ -94,7 +98,7 @@ export const resendOTPEmail = async (email: string) => {
     } else {
       return {
         success: false,
-        message: "Invalid credential. Please register.",
+        message: "Invalid credential. Please register."
       };
     }
   } catch (error) {

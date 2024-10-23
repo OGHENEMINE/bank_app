@@ -16,7 +16,10 @@ export const updatePassword = async (form: FormData) => {
     const validation = updatePasswordSchema.safeParse(data);
 
     if (!validation.success) {
-      return validation.error;
+      return {
+        successs: false,
+        message: `Something went wrong. ${validation.error.flatten()}`,
+      };
     }
     await connectDB();
 

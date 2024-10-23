@@ -46,14 +46,19 @@ const NewTransactionComponent = () => {
     values: z.infer<typeof AdminTransactionValidation>
   ) => {
     try {
-      console.log(values)
+      console.log(values);
       const data = new FormData();
 
-      for (const key in values) {
-        if (values.hasOwnProperty(key)) {
-          data.append(key, values[key]);
+      // Use keyof to ensure that key is properly typed
+      (Object.keys(values) as (keyof typeof values)[]).forEach((key) => {
+        // TypeScript will now know that key is one of the defined keys
+        const value = values[key];
+
+        // Append the value to the FormData if it's not undefined
+        if (value !== undefined) {
+          data.append(key, value as string); // Make sure to cast value to string if necessary
         }
-      }
+      });
 
       const { success, message, error } = await createTransaction(data);
 
@@ -102,10 +107,7 @@ const NewTransactionComponent = () => {
                         Transaction account id
                       </FormLabel>
                       <FormControl>
-                        <Input
-                          type="hidden"
-                          {...field}
-                        />
+                        <Input type="hidden" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

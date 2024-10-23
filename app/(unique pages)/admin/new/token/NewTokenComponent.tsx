@@ -69,13 +69,17 @@ const NewTokenComponent = () => {
     try {
       console.log(values);
       const data = new FormData();
+      // Use keyof to ensure that key is properly typed
+      (Object.keys(values) as (keyof typeof values)[]).forEach((key) => {
+        // TypeScript will now know that key is one of the defined keys
+        const value = values[key];
 
-      for (const key in values) {
-        if (values.hasOwnProperty(key)) {
-          data.append(key, values[key]);
+        // Append the value to the FormData if it's not undefined
+        if (value !== undefined) {
+          data.append(key, value as string); // Make sure to cast value to string if necessary
         }
-      }
-
+      });
+      
       // Submit the form data...
       const { success, message } = await addToken(data);
       // console.log(success)

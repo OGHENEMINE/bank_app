@@ -16,7 +16,7 @@ import { useContext } from "react";
 import { ArrowLeft, Loader } from "lucide-react";
 import { toast } from "sonner";
 import { ExternalTransferValidation } from "./schema";
-import { TransferFormDetails, TransferFormInterface } from "@/interface";
+import { TransferFormDetails, TransferFormInterface } from "@/Interface";
 
 const ExternalTransfer = () => {
   const { step, setStep, setFormDetails, formDetails, handleGoBack } =

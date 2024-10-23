@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Loader2, Rss, Send } from "lucide-react";
 import Link from "next/link";
 import { AuthContext } from "@/context/authContext";
-import { AuthContextInterface } from "@/interface";
 import { toast } from "sonner";
 import { useParams, useRouter } from "next/navigation";
 import { updatePassword } from "./action";
@@ -21,6 +20,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { updatePasswordSchema } from "./schema";
+import { AuthContextInterface } from "@/Interface";
 
 const UpdateComponent = () => {
   const { checkUser } = useContext(AuthContext) as AuthContextInterface;
@@ -40,17 +40,17 @@ const UpdateComponent = () => {
     try {
       const data = new FormData();
 
-      for (const key in values) {
-        if (values.hasOwnProperty(key)) {
-          data.append(key, values[key]);
-        }
-      }
-      const res = await updatePassword(data);
-      if (res.success === true) {
+      // Use keyof to ensure that key is properly typed
+      (Object.keys(values) as (keyof typeof values)[]).forEach((key) => {
+        data.append(key, values[key]); // Make sure to cast value to string if necessary
+      });
+      
+      const { message, success } = await updatePassword(data);
+      if (success === true) {
         push("/login");
-        return toast.success(res.message);
+        return toast.success(message);
       } else {
-        toast.error(res.message);
+        toast.error(message);
       }
     } catch (error) {
       console.log(error);

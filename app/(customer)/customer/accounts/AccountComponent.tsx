@@ -1,15 +1,15 @@
 "use client";
 import { AuthContext } from "@/context/authContext";
-import { AccountInterface, AuthContextInterface } from "@/interface";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { getUserAccounts } from "./actions";
 import CustomerAccountCard from "@/components/me/CustomerAccountCard";
 import { toast } from "sonner";
+import { AccountInterface, AuthContextInterface } from "@/Interface";
 
 const AccountComponent = () => {
-  const { user } = useContext(AuthContext) as AuthContextInterface;
+  const { user } = useContext(AuthContext) as AuthContextInterface  ;
   const [accounts, setAccounts] = useState<AccountInterface[]>([]);
 
   useEffect(() => {

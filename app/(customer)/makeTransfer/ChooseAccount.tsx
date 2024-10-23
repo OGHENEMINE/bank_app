@@ -3,8 +3,8 @@ import { ArrowRight, Loader } from "lucide-react";
 import { TransferFormContext } from "./Index";
 import { useContext } from "react";
 import { Button } from "@/components/ui/button";
-import { TransferFormDetails, TransferFormInterface } from "@/interface";
 import { formatCurrencyUI } from "@/lib/formatCurrency";
+import { TransferFormDetails, TransferFormInterface } from "@/Interface";
 
 const ChooseAccount = () => {
   const { step, isLoading, accounts, setStep, formDetails, setFormDetails } =

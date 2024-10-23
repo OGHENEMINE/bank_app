@@ -18,11 +18,11 @@ import { Input } from "@/components/ui/input";
 import { Loader2, MailPlus } from "lucide-react";
 import Link from "next/link";
 import { AuthContext } from "@/context/authContext";
-import { AuthContextInterface } from "@/interface";
 import { useRouter } from "next/navigation";
 import { recoverySchema } from "./schema";
 import { sendOTPEmail } from "./action";
 import { toast } from "sonner";
+import { AuthContextInterface } from "@/Interface";
 
 const RecoveryComponent = () => {
   const { checkUser } = useContext(AuthContext) as AuthContextInterface;

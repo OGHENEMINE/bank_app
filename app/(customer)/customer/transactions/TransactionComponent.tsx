@@ -1,16 +1,13 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader } from "@/components/ui/card";
 import { ArrowLeftRight, Clock2 } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import MakeTransfer from "../../makeTransfer/Index";
 import { AuthContext } from "@/context/authContext";
 import { getUserTransactions } from "./action";
 import { toast } from "sonner";
-import { formatDateString } from "@/lib/formatDate";
-import currencies from "@/lib/currency";
 import ModalPortal from "@/components/me/ModalPortal";
-import { formatCurrencyUI } from "@/lib/formatCurrency";
 import { Button } from "@/components/ui/button";
 import { AuthContextInterface, TransactionInterface } from "@/Interface";
 import CustomerTransactionsComponent from "@/components/me/CustomerTransactionsComponent";

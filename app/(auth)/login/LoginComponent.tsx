@@ -38,13 +38,7 @@ const LoginComponent = () => {
 
       // Use keyof to ensure that key is properly typed
       (Object.keys(values) as (keyof typeof values)[]).forEach((key) => {
-        // TypeScript will now know that key is one of the defined keys
-        const value = values[key];
-        
-        // Append the value to the FormData if it's not undefined
-        if (value !== undefined) {
-          data.append(key, value as string); // Make sure to cast value to string if necessary
-        }
+        data.append(key, values[key]); // Make sure to cast value to string if necessary
       });
       
       const {message, success} = await loginUser(data);
