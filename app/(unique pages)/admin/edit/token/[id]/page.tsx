@@ -37,12 +37,12 @@ const EditTokenComponent = () => {
     const fetchUser = async () => {
       try {
         const { success, token, message } = await getTokenInfo(id as string);
-        console.log(token)
+        console.log(token);
 
         if (success) {
           form.setValue("id", id as string);
           form.setValue("token", token.token);
-          form.setValue("usage", (token.usage));
+          form.setValue("usage", token.usage);
           console.info(message);
         } else {
           console.error(message);
@@ -58,19 +58,23 @@ const EditTokenComponent = () => {
   // 2. Define a submit handler.
   const onSubmit = async (values: z.infer<typeof editTokenSchema>) => {
     try {
-        console.log(values)
+      console.log(values);
       const data = new FormData();
-      // Assuming values is an object with keys and values
-      for (const key in values) {
-        if (values.hasOwnProperty(key)) {
-          data.append(key, values[key]);
+      // Use keyof to ensure that key is properly typed
+      (Object.keys(values) as (keyof typeof values)[]).forEach((key) => {
+        // TypeScript will now know that key is one of the defined keys
+        const value = values[key];
+
+        // Append the value to the FormData if it's not undefined
+        if (value !== undefined) {
+          data.append(key, value as string); // Make sure to cast value to string if necessary
         }
-      }
+      });
       const { success, message } = await updateTokenInfo(data);
 
       if (success) {
         toast.success(message);
-        return push("/tokens")
+        return push("/tokens");
       } else {
         toast.error(message);
       }
